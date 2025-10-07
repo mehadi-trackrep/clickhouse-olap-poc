@@ -1,0 +1,24 @@
+[project]
+name = "clickhouse-olap-poc"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "clickhouse-driver>=0.2.9",
+    "faker>=37.8.0",
+    "mysql-connector-python>=9.4.0",
+    "pandas>=2.3.3",
+    "psycopg2-binary>=2.9.10",
+    "pytest>=8.4.2",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-dir]
+"" = "src"
+
+[project.scripts]
+setup_db = "clickhouse_olap_poc.setup_database:main"
+start_compare = "clickhouse_olap_poc.main:main"

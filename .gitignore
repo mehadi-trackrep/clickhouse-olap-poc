@@ -1,0 +1,12 @@
+.venv
+.h
+.env
+__pycache__/
+.ipynb_checkpoints
+.DS_Store
+.vscode/
+.idea/
+*.log
+data/
+outputs/
+models/

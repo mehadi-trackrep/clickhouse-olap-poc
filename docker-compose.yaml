@@ -1,0 +1,51 @@
+services:
+  clickhouse-server:
+    image: clickhouse/clickhouse-server:latest
+    container_name: clickhouse-server-compare
+    ports:
+      - "8123:8123"
+      - "9000:9000"
+    environment:
+      - CLICKHOUSE_PASSWORD=secret
+    volumes:
+      - clickhouse_data:/var/lib/clickhouse/
+    ulimits:
+      nofile:
+        soft: 262144
+        hard: 262144
+    networks:
+      - localnet_2
+
+  mysql-db:
+    image: mysql:8.0
+    container_name: mysql-db-compare
+    ports:
+      - "3310:3306"
+    # ADD THIS COMMAND SECTION
+    environment:
+        MYSQL_ROOT_PASSWORD: secret
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - localnet_2
+
+  postgresql-db:
+    image: postgres:13
+    container_name: postgresql-db-compare
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_PASSWORD=secret
+    networks:
+      - localnet_2
+
+# This top-level section declares the networks and volumes
+networks:
+  localnet_2:
+    driver: bridge
+
+volumes:
+  clickhouse_data:
+    driver: local
+  mysql_data:
+    driver: local

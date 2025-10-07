@@ -1,0 +1,13 @@
+README.md
+pyproject.toml
+src/clickhouse_olap_poc/compare_with_mysql.py
+src/clickhouse_olap_poc/compare_with_postgresql.py
+src/clickhouse_olap_poc/generate_data_by_faker.py
+src/clickhouse_olap_poc/main.py
+src/clickhouse_olap_poc/setup_database.py
+src/clickhouse_olap_poc.egg-info/PKG-INFO
+src/clickhouse_olap_poc.egg-info/SOURCES.txt
+src/clickhouse_olap_poc.egg-info/dependency_links.txt
+src/clickhouse_olap_poc.egg-info/entry_points.txt
+src/clickhouse_olap_poc.egg-info/requires.txt
+src/clickhouse_olap_poc.egg-info/top_level.txt
