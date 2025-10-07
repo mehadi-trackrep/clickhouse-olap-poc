@@ -1,3 +1,0 @@
-[console_scripts]
-setup_db = clickhouse_olap_poc.setup_database:main
-start_compare = clickhouse_olap_poc.main:main

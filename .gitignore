@@ -10,3 +10,6 @@ __pycache__/
 data/
 outputs/
 models/
+*.zip
+*.tar.gz
+*.egg-info/
