@@ -62,21 +62,15 @@ def run_query(db_type, query):
     return end_time - start_time
 
 
-def compare_query_performance_with_mysql():
+def compare_query_performance_with_mysql() -> dict:
     """Compares the performance of the analytical query on both databases."""
     mysql_time = run_query("MySQL", ANALYTICAL_QUERY)
     clickhouse_time = run_query("ClickHouse", ANALYTICAL_QUERY)
     
-    print("\n\n" + "="*30)
-    print("       C O M P A R I S O N")
-    print("="*30)
-    print(f"MySQL Query Time:      {mysql_time:.4f} seconds")
-    print(f"ClickHouse Query Time: {clickhouse_time:.4f} seconds")
-    print("-"*30)
-    if clickhouse_time > 0:
-        improvement = mysql_time / clickhouse_time
-        print(f"ClickHouse was {improvement:.1f}x faster for this analytical query.")
-    print("="*30)
+    return {
+        "mysql_time": mysql_time,
+        "clickhouse_time": clickhouse_time
+    }
 
 
 # --- 4. Main Execution ---

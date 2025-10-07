@@ -62,22 +62,15 @@ def run_query(db_type, query):
     return end_time - start_time
 
 
-def compare_query_performance_with_postgresql():
+def compare_query_performance_with_postgresql() -> dict:
     """Compares the performance of the analytical query on both databases."""
     postgresql_time = run_query("postgresql", ANALYTICAL_QUERY)
     clickhouse_time = run_query("ClickHouse", ANALYTICAL_QUERY)
     
-    print("\n\n" + "="*30)
-    print("       C O M P A R I S O N")
-    print("="*30)
-    print(f"Postgresql Query Time:      {postgresql_time:.4f} seconds")
-    print(f"ClickHouse Query Time: {clickhouse_time:.4f} seconds")
-    print("-"*30)
-    if clickhouse_time > 0:
-        improvement = postgresql_time / clickhouse_time
-        print(f"ClickHouse was {improvement:.1f}x faster for this analytical query.")
-    print("="*30)
-
+    return {
+        "postgresql_time": postgresql_time,
+        "clickhouse_time": clickhouse_time
+    }
 
 # --- 4. Main Execution ---
 if __name__ == "__main__":

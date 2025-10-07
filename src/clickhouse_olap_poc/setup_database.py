@@ -1,4 +1,5 @@
 import time
+import psycopg2
 import pandas as pd
 import mysql.connector
 from typing import Optional
@@ -35,8 +36,8 @@ postgresql_CONFIG = {
 
 def setup_postgresql(data):
     """Connects to PostgreSQL, creates table, and inserts data."""
-    import psycopg2
     print("\n--- Setting up PostgreSQL ---")
+    time.sleep(5) # Wait for PostgreSQL to be ready
     conn = psycopg2.connect(**postgresql_CONFIG)
     cursor = conn.cursor()
     
