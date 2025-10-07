@@ -24,6 +24,50 @@ MYSQL_CONFIG = {
     'database': DB_NAME,
     'port': 3310
 }
+postgresql_CONFIG = {
+    'host': '127.0.0.1',
+    'user': 'postgres',
+    'password': 'secret',
+    'database': DB_NAME,
+    'port': 5433
+}
+
+
+def setup_postgresql(data):
+    """Connects to PostgreSQL, creates table, and inserts data."""
+    import psycopg2
+    print("\n--- Setting up PostgreSQL ---")
+    conn = psycopg2.connect(**postgresql_CONFIG)
+    cursor = conn.cursor()
+    
+    print("Creating table...")
+    cursor.execute(f"DROP TABLE IF EXISTS {TABLE_NAME};")
+    cursor.execute(f"""
+        CREATE TABLE {TABLE_NAME} (
+            event_time TIMESTAMP,
+            url VARCHAR(255),
+            country VARCHAR(10),
+            response_time_ms INTEGER
+        );
+    """)
+    
+    print(f"Inserting {len(data):,} records into PostgreSQL (this may take a minute)...")
+    start_time = time.time()
+    
+    # Convert DataFrame to list of tuples for bulk insert
+    tuples = []
+    for row in data.itertuples(index=False):
+        tuples.append((row.event_time.to_pydatetime(), row.url, row.country, row.response_time_ms))
+
+    insert_query = f"INSERT INTO {TABLE_NAME} (event_time, url, country, response_time_ms) VALUES (%s, %s, %s, %s)"
+    cursor.executemany(insert_query, tuples)
+    conn.commit() # Important: commit the transaction
+    
+    end_time = time.time()
+    print(f"PostgreSQL insert time: {end_time - start_time:.2f} seconds.")
+    
+    cursor.close()
+    conn.close()
 
 
 def setup_mysql(data):
@@ -94,8 +138,9 @@ def setup_clickhouse(data):
 
 def setup_db(data: Optional[pd.DataFrame] = None):
     """Main function to insert data and setup the databases."""
-    setup_mysql(data)
-    setup_clickhouse(data)
+    setup_postgresql(data)
+    # setup_mysql(data)
+    # setup_clickhouse(data)
 
 def main():
     # Generate data once    

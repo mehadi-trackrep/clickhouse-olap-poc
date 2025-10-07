@@ -1,6 +1,6 @@
 import time
 from clickhouse_driver import Client as ClickHouseClient
-import postgresql.connector
+import psycopg2 as postgresql
 
 # --- Configuration ---
 DB_NAME = 'demodb'
@@ -15,10 +15,10 @@ CLICKHOUSE_CONFIG = {
 }
 postgresql_CONFIG = {
     'host': '127.0.0.1',
-    'user': 'root',
+    'user': 'postgres',
     'password': 'secret',
     'database': DB_NAME,
-    'port': 3310
+    'port': 5433
 }
 
 # --- The Query to Compare ---
@@ -41,7 +41,7 @@ def run_query(db_type, query):
     start_time = time.time()
     
     if db_type == "postgresql":
-        conn = postgresql.connector.connect(**postgresql_CONFIG)
+        conn = postgresql.connect(**postgresql_CONFIG)
         cursor = conn.cursor()
         cursor.execute(query)
         results = cursor.fetchall()
@@ -81,12 +81,5 @@ def compare_query_performance_with_postgresql():
 
 # --- 4. Main Execution ---
 if __name__ == "__main__":
-    # # Generate data once
-    # log_data = generate_data(NUM_RECORDS)
-
-    # # Setup databases and insert data
-    # setup_postgresql(log_data)
-    # setup_clickhouse(log_data)
-
     # Run the comparison
     compare_query_performance_with_postgresql()
