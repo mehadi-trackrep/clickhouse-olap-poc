@@ -23,3 +23,11 @@ def generate_data(num_records: int) -> pd.DataFrame:
     }
 
     return pd.DataFrame(data)
+
+if __name__ == "__main__":
+    df = generate_data(1_000_000)
+    print(df.head())
+    print(df.info())
+    print(df.describe())
+    df.to_csv('fake_logs.csv', index=False)
+    print("Data saved to 'fake_logs.csv'.")

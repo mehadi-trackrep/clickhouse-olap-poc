@@ -39,6 +39,17 @@ services:
     networks:
       - localnet_2
 
+  duckdb:
+    image: ghcr.io/duckdb/duckdb:latest
+    container_name: duckdb-compare
+    command: ["duckdb", "--http-server", "--http-port", "8080"]
+    ports:
+      - "8080:8080"
+    volumes:
+      - duckdb_data:/data
+    networks:
+      - localnet_2
+
 # This top-level section declares the networks and volumes
 networks:
   localnet_2:
@@ -48,4 +59,6 @@ volumes:
   clickhouse_data:
     driver: local
   mysql_data:
+    driver: local
+  duckdb_data:
     driver: local

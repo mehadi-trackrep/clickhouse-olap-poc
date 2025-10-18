@@ -4,13 +4,12 @@ from clickhouse_olap_poc.compare_with_mysql import compare_query_performance_wit
 from clickhouse_olap_poc.compare_with_postgresql import compare_query_performance_with_postgresql
 
 def main():
-    mysql_clickhouse_peformance = compare_query_performance_with_mysql()
-    postgresql_clickhouse_peformance = compare_query_performance_with_postgresql()
     
     print("\n\n" + "="*30)
     print("       C O M P A R I S O N")
     
     ## MySQL vs ClickHouse
+    mysql_clickhouse_peformance = compare_query_performance_with_mysql()
     mysql_time = mysql_clickhouse_peformance["mysql_time"]
     clickhouse_time = mysql_clickhouse_peformance["clickhouse_time"]
     print("="*30)
@@ -24,6 +23,7 @@ def main():
     print("\n")
     
     ## Postgresql vs ClickHouse
+    postgresql_clickhouse_peformance = compare_query_performance_with_postgresql()
     postgresql_time = postgresql_clickhouse_peformance["postgresql_time"]
     clickhouse_time = postgresql_clickhouse_peformance["clickhouse_time"]
     print("="*30)

@@ -4,6 +4,12 @@
 - uv pip install --no-deps -e .
 
 
+## See Postgres DB & Tables:-
+1. docker exec -it 2edfbaaca847 psql -U postgres
+2. `\l` [to see the databases]
+3. `\c` <db_name> [to connect with a database]
+4. `\dt` [to get the database tables]
+
 
 ## Comparison of MySQL & ClickHouse
 1. 

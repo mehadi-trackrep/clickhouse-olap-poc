@@ -132,15 +132,10 @@ def insert_big_data(db_type: DB_TYPE) -> None:
     try:
         for chunk_df in pd.read_csv(CSV_FILE, chunksize=CHUNK_SIZE):
             
-            if db_type in ('postgres', 'mysql'):
-                # Replace pandas.NA/NaN with None (which becomes NULL in SQL)
-                chunk_df = chunk_df.astype(object).where(pd.notnull(chunk_df), None)
-            
             rows = chunk_df.values.tolist()  # List of lists
             
             if db_type == 'clickhouse':
                 chunk_df['event_time'] = pd.to_datetime(chunk_df['event_time'])
-                chunk_df[['url', 'country']] = chunk_df[['url', 'country']].fillna('')
                 clickhouse_client.execute(f'INSERT INTO {DB_NAME}.{TABLE_NAME} VALUES', chunk_df.to_dict('records'))
             elif db_type == 'postgres':
                 insert_query = f"INSERT INTO {TABLE_NAME} (event_time, url, country, response_time_ms) VALUES (%s, %s, %s, %s)"
@@ -181,12 +176,9 @@ def insert_big_data(db_type: DB_TYPE) -> None:
 
 def setup_db_insert_big_data():
     """Main function to insert data and setup the databases."""
-    # insert_big_data(db_type='clickhouse') # [ DONE ]
-    
-    # insert_big_data(db_type='postgres') # [ DONE ]
-    
-    insert_big_data(db_type='mysql') 
-    
+    insert_big_data(db_type='clickhouse')
+    # insert_big_data(db_type='postgres')
+    # insert_big_data(db_type='mysql')
     # insert_big_data(db_type='duckdb')
 
 
